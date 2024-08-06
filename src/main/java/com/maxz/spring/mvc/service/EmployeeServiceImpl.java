@@ -1,6 +1,33 @@
-package com.maxz.spring.mvc.service;/**
-*
-* @author ZuevMYu
-* @since 25.07.2024
-*/public class EmployeeServiceImpl {
+package com.maxz.spring.mvc.service;
+
+import com.maxz.spring.mvc.dao.EmployeeDAO;
+import com.maxz.spring.mvc.entity.Employee;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+
+/**
+ * @author ZuevMYu
+ * @since 25.07.2024
+ */
+@Service
+public class EmployeeServiceImpl implements EmployeeService{
+
+    @Autowired
+    private EmployeeDAO employeeDAO;
+
+    @Override
+    @Transactional
+    public List<Employee> getAllEmployees() {
+
+        return employeeDAO.getAllEmployees();
+    }
+
+    @Override
+    @Transactional
+    public void saveEmployee(Employee employee){
+        employeeDAO.saveEmployee(employee);
+    }
 }
