@@ -4,9 +4,11 @@ import com.maxz.spring.mvc.entity.Employee;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.query.MutationQuery;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -57,4 +59,16 @@ public class EmployeeDAOImpl implements EmployeeDAO {
         return null;
     }
 
+    @Override
+    public void deleteEmployee(int id) {
+        Session session = null;
+        try {
+            session = sessionFactory.getCurrentSession();
+        } catch (HibernateException e) {
+            session = sessionFactory.openSession();
+        }
+        MutationQuery query = session.createMutationQuery("delete from Employee " + "where id = :employeeId");
+        query.setParameter("employeeId", id);
+        query.executeUpdate();
+    }
 }
