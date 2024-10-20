@@ -36,11 +36,25 @@ public class EmployeeDAOImpl implements EmployeeDAO {
         Session session = null;
         try {
             session = sessionFactory.getCurrentSession();
-        }catch (HibernateException e){
+        } catch (HibernateException e) {
             session = sessionFactory.openSession();
         }
 
-        session.persist(employee);
+        session.saveOrUpdate(employee);
+    }
+
+    @Override
+    public Employee getEmployee(int id) {
+        Session session = null;
+        try {
+            session = sessionFactory.getCurrentSession();
+            Employee employee = session.get(Employee.class, id);
+            return employee;
+        } catch (HibernateException e) {
+            session = sessionFactory.openSession();
+        }
+
+        return null;
     }
 
 }
